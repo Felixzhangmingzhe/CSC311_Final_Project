@@ -6,6 +6,11 @@ from utils import (
 )
 import numpy as np
 
+### DO NOT DELETE THIS PART ###
+# import os
+# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = r'C:\Users\张明哲\AppData\Local\Programs\Python\Python311\Lib\site-packages\PyQt5\Qt5\plugins'
+### DO NOT DELETE THIS PART ###
+
 
 def sigmoid(x):
     """Apply sigmoid function."""
@@ -28,6 +33,13 @@ def neg_log_likelihood(data, theta, beta):
     # Implement the function as described in the docstring.             #
     #####################################################################
     log_lklihood = 0.0
+
+    for i in range(len(data['user_id'])):
+        user = data['user_id'][i]
+        question = data['question_id'][i]
+        z = theta[user] - beta[question]
+        correct = data["is_correct"][i]
+        log_lklihood += correct * z - np.log(1 + np.exp(z))
     #####################################################################
     #                       END OF YOUR CODE                            #
     #####################################################################
@@ -55,7 +67,20 @@ def update_theta_beta(data, lr, theta, beta):
     # TODO:                                                             #
     # Implement the function as described in the docstring.             #
     #####################################################################
-    pass
+    gradient_theta = np.zeros_like(theta)
+    gradient_beta = np.zeros_like(beta)
+
+    for i in range(len(data["user_id"])):
+        user = data["user_id"][i]
+        question = data["question_id"][i]
+        z = theta[user] - beta[question]
+        correct = data["is_correct"][i]
+
+        gradient_theta[user] += correct - sigmoid(z)
+        gradient_beta[question] -= correct - sigmoid(z)
+
+    theta += lr * gradient_theta
+    beta += lr * gradient_beta
     #####################################################################
     #                       END OF YOUR CODE                            #
     #####################################################################
@@ -76,10 +101,12 @@ def irt(data, val_data, lr, iterations):
     :return: (theta, beta, val_acc_lst)
     """
     # TODO: Initialize theta and beta.
-    theta = None
-    beta = None
+    theta = np.zeros(len(data["user_id"]))
+    beta = np.zeros(len(data["question_id"]))
 
     val_acc_lst = []
+    train_lld_lst = []
+    val_lld_lst = []
 
     for i in range(iterations):
         neg_lld = neg_log_likelihood(data, theta=theta, beta=beta)
@@ -88,8 +115,11 @@ def irt(data, val_data, lr, iterations):
         print("NLLK: {} \t Score: {}".format(neg_lld, score))
         theta, beta = update_theta_beta(data, lr, theta, beta)
 
+        train_lld_lst.append(neg_lld)
+        val_lld_lst.append(neg_log_likelihood(val_data, theta=theta, beta=beta))
+
     # TODO: You may change the return values to achieve what you want.
-    return theta, beta, val_acc_lst
+    return theta, beta, val_acc_lst, train_lld_lst, val_lld_lst
 
 
 def evaluate(data, theta, beta):
@@ -117,12 +147,25 @@ def main():
     val_data = load_valid_csv("./data")
     test_data = load_public_test_csv("./data")
 
+    ### DO NOT DELETE THIS PART ###
+    # train_data = load_train_csv("C:\CSC311_Final_Project\data")
+    # # You may optionally use the sparse matrix.
+    # # sparse_matrix = load_train_sparse("C:\CSC311_Final_Project\data")
+    # val_data = load_valid_csv("C:\CSC311_Final_Project\data")
+    # test_data = load_public_test_csv("C:\CSC311_Final_Project\data")
+    ### DO NOT DELETE THIS PART ###
+
     #####################################################################
     # TODO:                                                             #
     # Tune learning rate and number of iterations. With the implemented #
     # code, report the validation and test accuracy.                    #
     #####################################################################
-    pass
+    lr = 0.01
+    iterations = 100
+
+    theta, beta, val_acc_lst, train_lld_lst, val_lld_lst = irt(
+        train_data, val_data, lr, iterations
+    )
     #####################################################################
     #                       END OF YOUR CODE                            #
     #####################################################################
@@ -131,7 +174,8 @@ def main():
     # TODO:                                                             #
     # Implement part (d)                                                #
     #####################################################################
-    pass
+    j_1 = beta.argmin()
+    j_2 = beta.argmax()
     #####################################################################
     #                       END OF YOUR CODE                            #
     #####################################################################

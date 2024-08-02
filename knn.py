@@ -66,9 +66,9 @@ def main():
     test_data = load_public_test_csv("./data")
 
     ### DO NOT DELETE THIS PART ###
-    # sparse_matrix = load_train_sparse("C:\CS\csc311\Final Project\data").toarray()
-    # val_data = load_valid_csv("C:\CS\csc311\Final Project\data")
-    # test_data = load_public_test_csv("C:\CS\csc311\Final Project\data")
+    # sparse_matrix = load_train_sparse("C:\CSC311_Final_Project\data").toarray()
+    # val_data = load_valid_csv("C:\CSC311_Final_Project\data")
+    # test_data = load_public_test_csv("C:\CSC311_Final_Project\data")
     ### DO NOT DELETE THIS PART ###
 
     print("Sparse matrix:")
