@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage{fullpage,amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{calc}  % arithmetic in length parameters
+\usepackage{caption}
+\usepackage{enumitem}  % more control over list formatting
+\usepackage{fancyhdr}  % simpler headers and footers
+\usepackage{geometry}  % page layout
+\usepackage{lastpage}  % for last page number
+\usepackage{listings}
+\usepackage{relsize}  % easier font size changes
+\usepackage[normalem]{ulem}  % smarter underlining
+\usepackage{url}  % verb-like typesetting of URLs
+\usepackage{xcolor}
+\usepackage{xfrac}  % nicer looking simple fractions for text and math
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=false,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\everymath{\displaystyle}
+
+\newcommand{\arrayex}[1]{
+    \begin{tabular}{|*{20}{c|}}
+    \hline
+    #1 \\
+    \hline
+    \end{tabular}
+}
+
+\setlength{\tabcolsep}{5pt}
+
+\renewcommand{\arraystretch}{1}
+
+%\usepackage[T1]{fontenc}  % use true 8-bit fonts
+%\usepackage{slantsc}  % allow slanted small-caps
+%\usepackage{microtype}  % perform various font optimizations
+%% Use Palatino-based monospace instead of kpfonts' default.
+%\usepackage{newpxtext}
+
+% Common macros.
+\input{macros-263}
+
+
+\geometry{a4paper, margin=1in, headheight=15pt, headsep=20pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CSC311 Summer 2024}
+\fancyhead[R]{Final Project}
+\fancyfoot[C]{\thepage}
+
+
+\title{Question 2}
+\date{\vspace{-7.5ex}}
+\hypersetup{pdfpagemode=Fullscreen,
+    colorlinks=true,
+    linkfileprefix={}}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Given the probability that the question $j$ is correctly answered by student $i$ is:
+    \begin{equation*}
+        p_{ij} =  \frac{\exp(\theta_i - \beta_j)}{1 + \exp(\theta_i - \beta_j)}
+    \end{equation*}
+    
+    The log-likelihood for all students is derived as follows:
+    \begin{align*}
+        \log p(\mathbf{C}|\boldsymbol{\theta}, \boldsymbol{\beta}) &= \sum_{i, j} (c_{ij} \log p_{ij} + (1 - c_{ij}) \log (1 - p_{ij})) \\
+        &= \sum_{i=1}^{n} \sum_{j=1}^{m} \left( c_{ij} \log \left( \frac{\exp(\theta_i - \beta_j)}{1 + \exp(\theta_i - \beta_j)} \right) + (1 - c_{ij}) \log \left( 1 - \frac{\exp(\theta_i - \beta_j)}{1 + \exp(\theta_i - \beta_j)} \right) \right) \\
+        &= \sum_{i=1}^{n} \sum_{j=1}^{m} (c_{ij} (\theta_i - \beta_j) - \log(1 + \exp(\theta_i - \beta_j))),
+    \end{align*}
+    where $c_{ij}$ is the binary response of student $i$ to question $j$.
+
+    The log-likelihood with respect to $\theta_i$ is:
+    \begin{align*}
+        \frac{\partial \log p(\mathbf{C}|\boldsymbol{\theta}, \boldsymbol{\beta})}{\partial \theta_i} &= \sum_{j=1}^{m} \left( c_{ij} - \frac{\exp(\theta_i - \beta_j)}{1 + \exp(\theta_i - \beta_j)} \right) \\
+        &= \sum_{j=1}^{m} (c_{ij} - p_{ij}).
+    \end{align*}
+
+    The log-likelihood with respect to $\beta_j$ is:
+    \begin{align*}
+        \frac{\partial \log p(\mathbf{C}|\boldsymbol{\theta}, \boldsymbol{\beta})}{\partial \beta_j} &= \sum_{i=1}^{n} \left( c_{ij} - \frac{\exp(\theta_i - \beta_j)}{1 + \exp(\theta_i - \beta_j)} \right) \\
+        &= \sum_{i=1}^{n} (c_{ij} - p_{ij}).
+    \end{align*}
+
+    \item The hyperparameters I selected are: learning rate = 0.01 and iterations = 100.
+    
+    The training and validation accuracies vs iterations are in the graph below:
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{irt_accuracy.png}
+    \end{center}
+
+    The log-likelihoods vs iterations are in the graph below:
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{irt_llk.png}
+    \end{center}
+
+    \item The Final Validation Accuracy: 0.7063223257126728
+    
+    The Final Test Accuracy: 0.707310189105278
+
+    \item I select the lowest difficulty question $j_1$ (Question 1165), the highest difficulty question $j_2$ (Question 47852) and the average difficulty question $j_3$ (Question 1410).
+
+    The probability of the correct response is in the graph below:
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{irt_question.png}
+    \end{center}
+
+    \item The shape of the curves are like the sigmoid function as expected.
+    
+    Fix a question $j$. As $\theta_i$ increases, the probability of the correct response $p_{ij}$ increases. This means if a student has a higher ability, the probability of the correct response increases.
+
+    Fix a student $i$. As $\beta_j$ increases, the probability of the correct response $p_{ij}$ decreases. This means if a question has a higher difficulty, the probability of the correct response decreases.
+\end{enumerate}
+
+\end{document}

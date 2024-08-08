@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{fullpage,amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{calc}  % arithmetic in length parameters
+\usepackage{caption}
+\usepackage{enumitem}  % more control over list formatting
+\usepackage{fancyhdr}  % simpler headers and footers
+\usepackage{geometry}  % page layout
+\usepackage{lastpage}  % for last page number
+\usepackage{listings}
+\usepackage{relsize}  % easier font size changes
+\usepackage[normalem]{ulem}  % smarter underlining
+\usepackage{url}  % verb-like typesetting of URLs
+\usepackage{xcolor}
+\usepackage{xfrac}  % nicer looking simple fractions for text and math
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=false,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\everymath{\displaystyle}
+
+\newcommand{\arrayex}[1]{
+    \begin{tabular}{|*{20}{c|}}
+    \hline
+    #1 \\
+    \hline
+    \end{tabular}
+}
+
+\setlength{\tabcolsep}{5pt}
+
+\renewcommand{\arraystretch}{1}
+
+%\usepackage[T1]{fontenc}  % use true 8-bit fonts
+%\usepackage{slantsc}  % allow slanted small-caps
+%\usepackage{microtype}  % perform various font optimizations
+%% Use Palatino-based monospace instead of kpfonts' default.
+%\usepackage{newpxtext}
+
+% Common macros.
+\input{macros-263}
+
+
+\geometry{a4paper, margin=1in, headheight=15pt, headsep=20pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CSC311 Summer 2024}
+\fancyhead[R]{Final Project}
+\fancyfoot[C]{\thepage}
+
+
+\title{Question 1}
+\date{\vspace{-7.5ex}}
+\hypersetup{pdfpagemode=Fullscreen,
+    colorlinks=true,
+    linkfileprefix={}}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+    \item [(a) (b) (c)] The accuracy on the validation data with $k \in \{1, 6, 11, 16, 21, 26\}$ on user-based and item-based collaborative filtering is as follows:
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{q1.png}
+    \end{center}
+    Test Accuracy on user-based CF with k* = 11: 0.6841659610499576
+
+    Test Accuracy on item-based CF with k* = 21: 0.6816257408975445
+
+    \item [(d)] The test on user-based CF is slightly better than item-based CF.
+    
+    Additionally, the test accuracy on user-based CF cost less time than item-based CF.
+
+    Therefore, user-based CF is better than item-based CF in this case.
+
+    \item [(e)] 
+    \begin{itemize}
+        \item The \textsc{knn} algorithm is computational expensive for large datasets.
+        \item The Curse of Dimensionality: In high dimensions, ``most'' points are approximately the same distance and the nearest neighbors are not very useful.
+    \end{itemize}
+\end{enumerate}
+
+\end{document}

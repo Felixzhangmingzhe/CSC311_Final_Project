@@ -10,7 +10,7 @@ from utils import (
 
 ### DO NOT DELETE THIS PART ###
 # import os
-# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = r'C:\Users\张明哲\AppData\Local\Programs\Python\Python311\Lib\site-packages\PyQt5\Qt5\plugins'
+# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = r'C:\\Users\\张明哲\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyQt5\\Qt5\\plugins'
 ### DO NOT DELETE THIS PART ###
 
 
@@ -66,9 +66,9 @@ def main():
     test_data = load_public_test_csv("./data")
 
     ### DO NOT DELETE THIS PART ###
-    # sparse_matrix = load_train_sparse("C:\CSC311_Final_Project\data").toarray()
-    # val_data = load_valid_csv("C:\CSC311_Final_Project\data")
-    # test_data = load_public_test_csv("C:\CSC311_Final_Project\data")
+    # sparse_matrix = load_train_sparse("C:\\CSC311_Final_Project\\data").toarray()
+    # val_data = load_valid_csv("C:\\CSC311_Final_Project\\data")
+    # test_data = load_public_test_csv("C:\\CSC311_Final_Project\\data")
     ### DO NOT DELETE THIS PART ###
 
     print("Sparse matrix:")
@@ -98,6 +98,7 @@ def main():
     plt.ylabel('Validation Accuracy')
     plt.title('Validation Accuracy vs k')
     plt.legend()
+    plt.savefig('q1.png')
     plt.show()
 
     k_star_user = k_values[user_acc.index(max(user_acc))]
