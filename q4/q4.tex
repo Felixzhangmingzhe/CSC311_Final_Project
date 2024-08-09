@@ -9,6 +9,7 @@
 \usepackage{geometry}  % page layout
 \usepackage{lastpage}  % for last page number
 \usepackage{listings}
+\usepackage{parskip}
 \usepackage{relsize}  % easier font size changes
 \usepackage[normalem]{ulem}  % smarter underlining
 \usepackage{url}  % verb-like typesetting of URLs
@@ -45,7 +46,8 @@
 \newcommand{\arrayex}[1]{
     \begin{tabular}{|*{20}{c|}}
     \hline
-    #1 \\
+    #1
+
     \hline
     \end{tabular}
 }
@@ -85,17 +87,22 @@
 \thispagestyle{fancy}
 
 
-\begin{enumerate}
-    The final validation accuracy is: 0.66286 \\
-    The final test accuracy is: 0.66949 \vspace{10} \\
-    \textbf{Ensemble process:} \\
-    we use three neural network models to implemented bagging ensemble. We first randomly sample three sample with replacement from out training data set. Then we train three different neural network independently for each training sample. These three neural network are complete independent and can run individually. After all models are trained, we use them to make prediction separately, finally we take the average of each of their predictions as our final prediction. \vspace{10}\\
-    \textbf{Better or Not:} \\
-    No, the bagging model is nearly the same performance as the single neural network model, so it doesn't improve the performance.\vspace{10} \\
-    \textbf{Reason:}\\
-    Ensembling the same model which train on different data subset has lack model diversity, thus it does not always improve the model performance. Also small training subset could be another problem, when the training set is small, there could be a issue that training subset are even smaller so that each model are not well trained, which result in poor performance.
-    
+The Final Validation Accuracy is: 0.66286
 
-\end{enumerate}
+The Final Test Accuracy is: 0.66949 \\
+
+\textbf{Ensemble process:}
+
+We use three neural network models to implement bagging ensemble. We first randomly sample with replacement from the training dataset. Then we train three different neural networks independently for each training sample. These three neural networks are independent and can run individually. After all models are trained, we use them to make predictions separately, and we take the average of each of their predictions as our final prediction. \\
+
+\textbf{Better or Not:}
+
+No, the bagging model is about the same performance as the single neural network model, so it doesn't improve the performance. \\
+
+\textbf{Reason:}
+
+Ensembling the same model trained on different data subsets lacks model diversity, which does not always improve the model performance.
+
+Additionally, the small training subset could be another problem. When the training set is small, there could be an issue that the training subset is even smaller, so that each model is not well trained, which results in poor performance.
 
 \end{document}

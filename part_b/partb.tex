@@ -9,6 +9,7 @@
 \usepackage{geometry}  % page layout
 \usepackage{lastpage}  % for last page number
 \usepackage{listings}
+\usepackage{parskip}
 \usepackage{relsize}  % easier font size changes
 \usepackage[normalem]{ulem}  % smarter underlining
 \usepackage{url}  % verb-like typesetting of URLs
@@ -69,7 +70,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{CSC311 Summer 2024}
-\fancyhead[R]{Final Project}\textbf{}
+\fancyhead[R]{Final Project}
 \fancyfoot[C]{\thepage}
 
 
@@ -84,55 +85,99 @@
 \maketitle
 \thispagestyle{fancy}
 
-\begin{enumerate}
-    \textbf{formal description} \vspace{10}\\
-    The performance of the IRT algorithm in part A is not satisfactory. We analyzed that the main reason is that a single decision tree is a high-variance model. We believe that the decision tree in part A overfits the training data, which makes the model's generalization ability poor.\vspace{10}\\
-    Therefore, we decided to reduce the variance by averaging the predictions of multiple decision trees using a random forest. Each tree is trained on a different random subset of the training data. The results are aggregated at the end to make the model more robust by smoothing the data.\vspace{15}\\
-    \textbf{Algorithm Box} \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6051723192250_.pic.jpg} \vspace{10}\\
-    By training multiple decision trees on different data subsets in the form of random forests, the overfitting problem of the model can be reduced. \vspace{30}\\
-    \textbf{Idea Diagram} \vspace{15}\\
-    \includegraphics[width=1.0\linewidth]{笔记 2024年8月9日.jpeg} \vspace{30}\\
-    \textbf{Comparison or Demonstration} \vspace{10}\\
-    For comparison, when using the single irt algorithm, we obtained the following statistics. We use this group of data as the baseline models: \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6061723195551_.pic.jpg} \vspace{10}\\
-    When using a random forest consisting of two decision trees, we get the following statistics:
-    \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6081723195750_.pic.jpg} \vspace{10}\\
-    When using a random forest consisting of three decision trees, we get the following statistics: \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6101723195879_.pic.jpg} \vspace{10}\\
+\section*{Formal Description}
 
-    When using a random forest consisting of four decision trees, we get the following statistics: \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6121723196137_.pic.jpg} \vspace{10}\\
-        
-    After comparison, our model does not significantly improve the accuracy. \vspace{20}\\
-    \textbf{experiment to test our hypothesis} \vspace{20}\\
-    We use the accuracy of the training data set and the accuracy of the validation data set to determine whether the model has signs of overfitting. If the training accuracy is significantly higher than the validation accuracy, it means that the model is too sensitive to the training data set and has signs of overfitting. On the contrary, if the training accuracy and validation accuracy are close, it means that the model does not have overfitting. \vspace{10}\\
-    The test accuracy of the original model is as follows: \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6071723195572_.pic.jpg} \vspace{10}\\
-    Obviously, the training accuracy of the original model is significantly higher than the validation accuracy, indicating that the original model may be overfitting. \vspace{20}\\
-    The random forests consisting of 2, 3, and 4 decision trees have the following statistics:\vspace{10} \\
-    \includegraphics[width=0.7\linewidth]{6091723195756_.pic.jpg} \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6111723195885_.pic.jpg} \vspace{10}\\
-    \includegraphics[width=0.7\linewidth]{6131723196143_.pic.jpg} \vspace{15}\\
-    Unfortunately, Random Forest only slightly reduces the gap between training accuracy and validation accuracy, and the overfitting problem still exists.\vspace{20}\\
+The performance of the IRT algorithm in part A is not satisfactory. We believe that the main reason is that a single decision tree is a high-variance model. We believe that the decision tree in part A overfits the training data, which makes the model's generalization ability poor.
 
-    \textbf{Limitations} \vspace{15}\\
-    As mentioned above, implementing Random Forest algorithm did not improve our original model significantly. This could be due to the following reasons: \vspace{10} \\
-\begin{itemize}
-    \item The given dataset is not large enough or diverse enough. Random Forest is known to perform well on large-scale datasets with many features. In our improved model, we split the dataset into many subsets and trained a Random Forest model on each subset. However, the dataset may not be large enough to benefit from this approach.\\
-    Hence, changing the dataset may improve the performance of the Random Forest algorithm. \vspace{10}\\
+Therefore, we decided to reduce the variance by averaging the predictions of multiple decision trees using a random forest. Each tree is trained on a different random subset of the training data. The results are aggregated at the end to make the model more robust by smoothing the data.
+
+\section*{Algorithm Box}
+
+\includegraphics[width=0.7\linewidth]{6051723192250_.pic.jpg}
+
+By training multiple decision trees on different data subsets in the form of random forests, the overfitting problem of the model can be reduced.
+
+\section*{Idea Diagram}
+
+\includegraphics[width=1.0\linewidth]{笔记 2024年8月9日.jpeg}
+
+\section*{Comparison or Demonstration}
+
+For comparison, when using the single irt algorithm, we obtained the following statistics. We use this group of data as the baseline models:
+
+\includegraphics[width=0.7\linewidth]{6061723195551_.pic.jpg}
+
+When using a random forest consisting of two decision trees, we get the following statistics:
+
+\includegraphics[width=0.7\linewidth]{6081723195750_.pic.jpg}
+
+When using a random forest consisting of three decision trees, we get the following statistics:
+
+\includegraphics[width=0.7\linewidth]{6101723195879_.pic.jpg}
+
+When using a random forest consisting of four decision trees, we get the following statistics:
+
+\includegraphics[width=0.7\linewidth]{6121723196137_.pic.jpg}
     
-    \item In our bagging implementation, we assumes all predictions from the base models are equally important. This may not be the case in practice. Some models may perform better on certain types of data, and simply averaging their predictions may not be the best approach.\\
+After comparison, our model does not significantly improve the accuracy.
+
+\section*{Experiment to Test Our Hypothesis}
+
+We use the accuracy of the training dataset and the accuracy of the validation dataset to determine whether the model has signs of overfitting. If the training accuracy is significantly higher than the validation accuracy, it means that the model is too sensitive to the training dataset and has signs of overfitting. On the contrary, if the training accuracy and validation accuracy are close, it means that the model does not have overfitting.
+
+The test accuracy of the original model is as follows:
+
+\includegraphics[width=0.7\linewidth]{6071723195572_.pic.jpg}
+
+We can see that the training accuracy of the original model is significantly higher than the validation accuracy, indicating that the original model may be overfitting.
+
+The random forests consisting of 2, 3, and 4 decision trees have the following statistics:
+
+\includegraphics[width=0.7\linewidth]{6091723195756_.pic.jpg}
+
+\includegraphics[width=0.7\linewidth]{6111723195885_.pic.jpg}
+
+\includegraphics[width=0.7\linewidth]{6131723196143_.pic.jpg}
+
+Unfortunately, Random Forest only slightly reduces the gap between training accuracy and validation accuracy, and the overfitting problem still exists.
+
+\section*{Limitations}
+
+As mentioned above, implementing Random Forest algorithm did not improve our original model significantly. This could be due to the following reasons:
+\begin{itemize}
+    \item The given dataset is not large enough or diverse enough. Random Forest is known to perform well on large-scale datasets with many features. In our improved model, we split the dataset into many subsets and trained a Random Forest model on each subset. However, the dataset may not be large enough to benefit from this approach.
+    
+    Hence, changing the dataset may improve the performance of the Random Forest algorithm.
+    
+    \item In our Random Forest algorithm, we assumes all predictions from the base models are equally important and we average all predictions of each decision tree to get the final prediction. This may not be the case in practice. Some models may perform better on certain types of data, and simply averaging their predictions may not be the best approach.
+    
     We can use a weighted average of the predictions to give more importance to the better performing models, but this requires tuning the weights, which can be time-consuming.
-    \vspace{10}\\
+
+    \item When ensembling multiple models, we need to ensure generalization. It may be because the base models are too similar and the overfitting problem still exists.
+    
+    We may need to use regularization to limit the complexity of the base models.
+   
     \item The Random Forest algorithm is computationally expensive. It requires a lot of time to tune the hyperparameters and train the model. We may not have been able to find the best hyperparameters in the time we had.
-    \vspace{10}\\
+   
     \item IRT model itself may be limited in predicting the student's performance. If we integrate more complex models in the ensemble, we may improve the performance of the model.
 \end{itemize}
 
+\section*{Contributions}
 
-\end{enumerate}
+\subsection*{Part A}
 
+\begin{itemize}
+    \item Quesion 1 and 2: Mingzhe Zhang
+    
+    \item Question 3 and 4: Zhiyuan Meng
+\end{itemize}
+
+\subsection*{Part B}
+
+\begin{itemize}
+    \item Question 1, 2 and 3: Zhiyuan Meng
+    
+    \item Question 4: Mingzhe Zhang
+\end{itemize}
 
 \end{document}

@@ -9,6 +9,7 @@
 \usepackage{geometry}  % page layout
 \usepackage{lastpage}  % for last page number
 \usepackage{listings}
+\usepackage{parskip}
 \usepackage{relsize}  % easier font size changes
 \usepackage[normalem]{ulem}  % smarter underlining
 \usepackage{url}  % verb-like typesetting of URLs
@@ -84,30 +85,41 @@
 \maketitle
 \thispagestyle{fancy}
 
-\begin{enumerate}
-    \textbf{We choose Option2}\\
-    \textbf{a)} \\
-    1.ALS break down large matrix into lower-dimensional matrices, Neural network modeling non-linear relationship trough layers. \\
-    2.ALS is less flexible than Neural network since they are designed for matrix factorization where neural network can model non-linear relationship.\\
-    3.ALS is more computationally efficient than Neural network for sparse dataset, Neural network require significant computational resource. \\
-    \textbf{b)}\\
-    coding in neural\_network.py \\
-    \textbf{c)}\\
-    the optimization hyperparameter we choose is: \\
-    k = 50, lr = 0.01, num\_epoch = 50 \\
-    We got Validation Accuracy of: 0.68981 \\
-    \textbf{d)}\\
-    plot with k = 50, lr = 0.01, num\_epoch = 50: \\
-    \includegraphics[width=0.7\linewidth]{6031723149317_.pic.jpg} \\
-    \includegraphics[width=0.7\linewidth]{6041723149328_.pic.jpg} \\
-    The Final Test Accuracy is: 0.68558 \\
-    \textbf{e)} \\
-    the best regularization penalty is lamb = 0.01, with this lamb, we got: \\
-    Final Validation Accuracy: 0.67824\\
-    Final Test Accuracy: 0.68078\\
-    The model didn't perform better with the regularization penalty, this may because that our model already well-regularized and does not overfitting or only has negligible overfitting issues. \\
 
+\textbf{We choose Option 2}
+\begin{enumerate}[label=(\alph*)]
+    \item 
+    \begin{itemize}
+        \item ALS breaks down large matrices into lower-dimensional matrices, while neural networks model non-linear relationships through layers.
+        
+        \item ALS is less flexible than neural networks because it is designed for matrix factorization, whereas neural networks can model non-linear relationships.
+        
+        \item ALS is more computationally efficient than neural networks for sparse datasets because neural networks require significant computational resources.
+    \end{itemize}
+
+    \item The implementation is in \texttt{neural\_network.py}.
+    
+    \item The optimization hyperparameters we chose are:
+    
+    \texttt{k = 50, lr = 0.01, num\_epoch = 50}
+
+    The Validation Accuracy we obtained is 0.68981.
+
+    \item The plot with \texttt{k = 50, lr = 0.01, num\_epoch = 50} is shown below:
+    
+    \includegraphics[width=0.7\linewidth]{6031723149317_.pic.jpg}
+
+    \includegraphics[width=0.7\linewidth]{6041723149328_.pic.jpg}
+
+    The Final Test Accuracy is 0.68558.
+
+    \item The best regularization penalty we found is $\lambda = 0.01$. With this value of $\lambda$, we obtained:
+    
+    Final Validation Accuracy: 0.67824
+
+    Final Test Accuracy: 0.68078
+
+    The model performed about the same with the regularization penalty. This may be because our model is already well-regularized and does not overfit, or only has negligible overfitting issues.
 \end{enumerate}
-
 
 \end{document}

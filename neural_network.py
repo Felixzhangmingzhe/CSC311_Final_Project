@@ -12,6 +12,11 @@ from utils import (
     load_train_sparse,
 )
 
+### DO NOT DELETE THIS PART ###
+# import os
+# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = r'C:\\Users\\张明哲\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyQt5\\Qt5\\plugins'
+### DO NOT DELETE THIS PART ###
+
 
 def load_data(base_path="./data"):
     """Load the data in PyTorch Tensor.

@@ -19,6 +19,10 @@ def main():
     # Load the train data.
     train_data = load_train_csv("./data")
 
+    ### DO NOT DELETE THIS PART ###
+    # train_data = load_train_csv("C:\\CSC311_Final_Project\\data")
+    ### DO NOT DELETE THIS PART ###
+
     correct_question_map = {}
     total_question_map = {}
 

@@ -9,6 +9,11 @@ from utils import (
 import numpy as np
 import matplotlib.pyplot as plt
 
+### DO NOT DELETE THIS PART ###
+# import os
+# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = r'C:\\Users\\张明哲\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyQt5\\Qt5\\plugins'
+### DO NOT DELETE THIS PART ###
+
 
 def sigmoid(x):
     """Apply sigmoid function."""
@@ -209,6 +214,14 @@ def main():
     # sparse_matrix = load_train_sparse("./data")
     val_data = load_valid_csv("./data")
     test_data = load_public_test_csv("./data")
+
+    ### DO NOT DELETE THIS PART ###
+    # train_data = load_train_csv("C:\\CSC311_Final_Project\\data")
+    # # You may optionally use the sparse matrix.
+    # # sparse_matrix = load_train_sparse("C:\\CSC311_Final_Project\\data")
+    # val_data = load_valid_csv("C:\\CSC311_Final_Project\\data")
+    # test_data = load_public_test_csv("C:\\CSC311_Final_Project\\data")
+    ### DO NOT DELETE THIS PART ###
 
     lr = 0.01
     iterations = 50
