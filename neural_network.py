@@ -74,6 +74,10 @@ class AutoEncoder(nn.Module):
         # Use sigmoid activations for f and g.                              #
         #####################################################################
         out = inputs
+
+        out = F.sigmoid(self.g(out))
+        out = F.sigmoid(self.h(out))
+
         #####################################################################
         #                       END OF YOUR CODE                            #
         #####################################################################
@@ -94,13 +98,15 @@ def train(model, lr, lamb, train_data, zero_train_data, valid_data, num_epoch):
     :return: None
     """
     # TODO: Add a regularizer to the cost function.
-
     # Tell PyTorch you are training the model.
     model.train()
 
     # Define optimizers and loss function.
     optimizer = optim.SGD(model.parameters(), lr=lr)
     num_student = train_data.shape[0]
+
+    train_losses = []
+    valid_accuracy = []
 
     for epoch in range(0, num_epoch):
         train_loss = 0.0
@@ -117,17 +123,27 @@ def train(model, lr, lamb, train_data, zero_train_data, valid_data, num_epoch):
             target[nan_mask] = output[nan_mask]
 
             loss = torch.sum((output - target) ** 2.0)
-            loss.backward()
+            # loss.backward()
 
-            train_loss += loss.item()
+            combined_loss = loss + 0.5 * lamb * model.get_weight_norm()
+            combined_loss.backward()
+
+            # train_loss += loss.item()
+            train_loss += combined_loss.item()
             optimizer.step()
 
         valid_acc = evaluate(model, zero_train_data, valid_data)
+
+        train_losses.append(train_loss)
+        valid_accuracy.append(valid_acc)
+
         print(
             "Epoch: {} \tTraining Cost: {:.6f}\t " "Valid Acc: {}".format(
                 epoch, train_loss, valid_acc
             )
         )
+
+    return train_losses, valid_accuracy
     #####################################################################
     #                       END OF YOUR CODE                            #
     #####################################################################
@@ -168,16 +184,69 @@ def main():
     # validation set.                                                   #
     #####################################################################
     # Set model hyperparameters.
-    k = None
-    model = None
+    # choose k=50, lr=0.01, lamb=0.01, num_epoch=50
+    # Best model with k=50, lr=0.01, lambda=0.01, Validation Accuracy: 0.6895286480383855
+    k = 50
+    model = AutoEncoder(train_matrix.shape[1], k)
 
     # Set optimization hyperparameters.
-    lr = None
-    num_epoch = None
-    lamb = None
+    lr = 0.01
+    num_epoch = 50
+    lamb = 0.01
 
-    train(model, lr, lamb, train_matrix, zero_train_matrix, valid_data, num_epoch)
+    train_loss, valid_accuracy = train(model, lr, lamb, train_matrix, zero_train_matrix, valid_data, num_epoch)
     # Next, evaluate your network on validation/test data
+    valid_acc = evaluate(model, zero_train_matrix, valid_data)
+    test_acc = evaluate(model, zero_train_matrix, test_data)
+
+    print("Validation Accuracy: ", valid_acc)
+    print("Test Accuracy: ", test_acc)
+
+    # plot the training and validation loss
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_loss, label='Training Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(valid_accuracy, label='Validation accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    # ks = [10, 50, 100, 200, 500]
+    # learning_rates = [0.01, 0.001, 0.0001]
+    # lambdas = [0.01, 0.001, 0.0001]
+    # num_epochs = 50
+    #
+    # best_validation_accuracy = 0
+    # best_k = None
+    # best_lr = None
+    # best_lambda = None
+    #
+    # for k in ks:
+    #     for lr in learning_rates:
+    #         for lamb in lambdas:
+    #             print(f'Training model with k={k}, lr={lr}, lambda={lamb}')
+    #             model = AutoEncoder(train_matrix.shape[1], k)
+    #             train(model, lr, lamb, train_matrix, zero_train_matrix, valid_data, num_epochs)
+    #             validation_accuracy = evaluate(model, zero_train_matrix, valid_data)
+    #             print(f'Validation Accuracy: {validation_accuracy}')
+    #
+    #             if validation_accuracy > best_validation_accuracy:
+    #                 best_validation_accuracy = validation_accuracy
+    #                 best_k = k
+    #                 best_lr = lr
+    #                 best_lambda = lamb
+    #
+    # print( f'Best model with k={best_k}, lr={best_lr}, lambda={best_lambda}, Validation Accuracy: {
+    # best_validation_accuracy}')
 
     #####################################################################
     #                       END OF YOUR CODE                            #
@@ -186,3 +255,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
