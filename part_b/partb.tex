@@ -115,7 +115,21 @@
     \includegraphics[width=0.7\linewidth]{6091723195756_.pic.jpg} \vspace{10}\\
     \includegraphics[width=0.7\linewidth]{6111723195885_.pic.jpg} \vspace{10}\\
     \includegraphics[width=0.7\linewidth]{6131723196143_.pic.jpg} \vspace{15}\\
-    Unfortunately, Random Forest only slightly reduces the gap between training accuracy and validation accuracy, and the overfitting problem still exists.\\
+    Unfortunately, Random Forest only slightly reduces the gap between training accuracy and validation accuracy, and the overfitting problem still exists.\vspace{20}\\
+
+    \textbf{Limitations} \vspace{15}\\
+    As mentioned above, implementing Random Forest algorithm did not improve our original model significantly. This could be due to the following reasons: \vspace{10} \\
+\begin{itemize}
+    \item The given dataset is not large enough or diverse enough. Random Forest is known to perform well on large-scale datasets with many features. In our improved model, we split the dataset into many subsets and trained a Random Forest model on each subset. However, the dataset may not be large enough to benefit from this approach.\\
+    Hence, changing the dataset may improve the performance of the Random Forest algorithm. \vspace{10}\\
+    
+    \item In our bagging implementation, we assumes all predictions from the base models are equally important. This may not be the case in practice. Some models may perform better on certain types of data, and simply averaging their predictions may not be the best approach.\\
+    We can use a weighted average of the predictions to give more importance to the better performing models, but this requires tuning the weights, which can be time-consuming.
+    \vspace{10}\\
+    \item The Random Forest algorithm is computationally expensive. It requires a lot of time to tune the hyperparameters and train the model. We may not have been able to find the best hyperparameters in the time we had.
+    \vspace{10}\\
+    \item IRT model itself may be limited in predicting the student's performance. If we integrate more complex models in the ensemble, we may improve the performance of the model.
+\end{itemize}
 
 
 \end{enumerate}
