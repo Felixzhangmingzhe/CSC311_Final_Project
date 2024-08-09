@@ -196,6 +196,9 @@ def main():
     plt.savefig("irt_llk.png")
     plt.show()
 
+    final_train_acc = evaluate(train_data, theta, beta)
+    print("Final train Accuracy: {}".format(final_train_acc))
+
     final_val_acc = evaluate(val_data, theta, beta)
     final_test_acc = evaluate(test_data, theta, beta)
     print("Final Validation Accuracy: {}".format(final_val_acc))

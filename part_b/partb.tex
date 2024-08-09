@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{fullpage,amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{calc}  % arithmetic in length parameters
+\usepackage{caption}
+\usepackage{enumitem}  % more control over list formatting
+\usepackage{fancyhdr}  % simpler headers and footers
+\usepackage{geometry}  % page layout
+\usepackage{lastpage}  % for last page number
+\usepackage{listings}
+\usepackage{relsize}  % easier font size changes
+\usepackage[normalem]{ulem}  % smarter underlining
+\usepackage{url}  % verb-like typesetting of URLs
+\usepackage{xcolor}
+\usepackage{xfrac}  % nicer looking simple fractions for text and math
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=false,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\everymath{\displaystyle}
+
+\newcommand{\arrayex}[1]{
+    \begin{tabular}{|*{20}{c|}}
+    \hline
+    #1 \\
+    \hline
+    \end{tabular}
+}
+
+\setlength{\tabcolsep}{5pt}
+
+\renewcommand{\arraystretch}{1}
+
+%\usepackage[T1]{fontenc}  % use true 8-bit fonts
+%\usepackage{slantsc}  % allow slanted small-caps
+%\usepackage{microtype}  % perform various font optimizations
+%% Use Palatino-based monospace instead of kpfonts' default.
+%\usepackage{newpxtext}
+
+% Common macros.
+\input{macros-263}
+
+
+\geometry{a4paper, margin=1in, headheight=15pt, headsep=20pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CSC311 Summer 2024}
+\fancyhead[R]{Final Project}\textbf{}
+\fancyfoot[C]{\thepage}
+
+
+\title{Part B}
+\date{\vspace{-10.0ex}}
+\hypersetup{pdfpagemode=Fullscreen,
+    colorlinks=true,
+    linkfileprefix={}}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+    \textbf{formal description} \vspace{10}\\
+    The performance of the IRT algorithm in part A is not satisfactory. We analyzed that the main reason is that a single decision tree is a high-variance model. We believe that the decision tree in part A overfits the training data, which makes the model's generalization ability poor.\vspace{10}\\
+    Therefore, we decided to reduce the variance by averaging the predictions of multiple decision trees using a random forest. Each tree is trained on a different random subset of the training data. The results are aggregated at the end to make the model more robust by smoothing the data.\vspace{15}\\
+    \textbf{Algorithm Box} \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6051723192250_.pic.jpg} \vspace{10}\\
+    By training multiple decision trees on different data subsets in the form of random forests, the overfitting problem of the model can be reduced. \vspace{30}\\
+    \textbf{Idea Diagram} \vspace{15}\\
+    \includegraphics[width=1.0\linewidth]{笔记 2024年8月9日.jpeg} \vspace{30}\\
+    \textbf{Comparison or Demonstration} \vspace{10}\\
+    For comparison, when using the single irt algorithm, we obtained the following statistics. We use this group of data as the baseline models: \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6061723195551_.pic.jpg} \vspace{10}\\
+    When using a random forest consisting of two decision trees, we get the following statistics:
+    \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6081723195750_.pic.jpg} \vspace{10}\\
+    When using a random forest consisting of three decision trees, we get the following statistics: \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6101723195879_.pic.jpg} \vspace{10}\\
+
+    When using a random forest consisting of four decision trees, we get the following statistics: \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6121723196137_.pic.jpg} \vspace{10}\\
+        
+    After comparison, our model does not significantly improve the accuracy. \vspace{20}\\
+    \textbf{experiment to test our hypothesis} \vspace{20}\\
+    We use the accuracy of the training data set and the accuracy of the validation data set to determine whether the model has signs of overfitting. If the training accuracy is significantly higher than the validation accuracy, it means that the model is too sensitive to the training data set and has signs of overfitting. On the contrary, if the training accuracy and validation accuracy are close, it means that the model does not have overfitting. \vspace{10}\\
+    The test accuracy of the original model is as follows: \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6071723195572_.pic.jpg} \vspace{10}\\
+    Obviously, the training accuracy of the original model is significantly higher than the validation accuracy, indicating that the original model may be overfitting. \vspace{20}\\
+    The random forests consisting of 2, 3, and 4 decision trees have the following statistics:\vspace{10} \\
+    \includegraphics[width=0.7\linewidth]{6091723195756_.pic.jpg} \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6111723195885_.pic.jpg} \vspace{10}\\
+    \includegraphics[width=0.7\linewidth]{6131723196143_.pic.jpg} \vspace{15}\\
+    Unfortunately, Random Forest only slightly reduces the gap between training accuracy and validation accuracy, and the overfitting problem still exists.\\
+
+
+\end{enumerate}
+
+
+\end{document}

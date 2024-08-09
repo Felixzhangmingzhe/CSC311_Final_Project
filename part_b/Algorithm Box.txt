@@ -1,0 +1,47 @@
+                            Algorithm 1: regular irt algorithm
+Result: train a single irt model
+Output: thetas, betas
+
+# regular irt algorithm, no changes needed
+
+
+                            Algorithm 2: split the training data
+Result: split the training data into subsets
+Output: a subset of the training data
+
+# randomly split the training data into subsets
+
+
+                            Algorithm 3: irt ensemble algorithm
+Result: train an ensemble of irt models
+Output: list of thetas, list of betas
+
+theta_lst = []
+beta_lst = []
+int repeat
+for i in range(repeat):
+    # split the training data
+    train_data = split_data(data)
+    # train a single irt model
+    thetas, betas = irt(train_data)
+    # store the thetas and betas in a list
+    theta_lst.append(thetas)
+    beta_lst.append(betas)
+
+return theta_lst, beta_lst
+
+
+                            Algorithm 4: evaluate the ensemble
+Result: evaluate the ensemble of irt models
+Output: the accuracy of the ensemble model
+
+total_correct = 0
+for i in range(len(data["user_id"])):
+    prdict_lst = []
+    for j in range(len(theta_lst)):
+        # make prediction for each model and store it in a list
+    # take the average of the predictions
+
+# then calculate the accuracy
+return total_correct / len(data["is_correct"])
+
