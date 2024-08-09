@@ -12,7 +12,6 @@ import torch
 
 
 def train_ensemble(models, lr, lamb, train_data, zero_train_data, valid_data, num_epoch, n_models=3):
-    # Dictionary to store trained models and their validation losses
     ensemble_models = []
     for i in range(n_models):
         indices = np.random.choice(range(len(train_data)), len(train_data))
@@ -70,24 +69,15 @@ def evaluate_ensemble(model, train_data, valid_data):
 def main():
     zero_train_matrix, train_matrix, valid_data, test_data = load_data()
 
-
-    # Convert your data to the appropriate format if necessary
-    # Assuming train_matrix and zero_train_matrix are NumPy arrays or similar
-    # valid_data and test_data should be structured to include user_ids and true_values
-
-    # Define the number of models in the ensemble, learning rate, and regularization strength
     n_models = 3
     num_epoch = 50
     lr = 0.01
     lamb = 0.01
 
-    # Initialize a list of models
     models = [AutoEncoder(num_question=train_matrix.shape[1], k=50) for _ in range(n_models)]
 
-    # Train each model on a bootstrap sample of the training data
     ensemble_models = train_ensemble(models, lr, lamb, train_matrix, zero_train_matrix, valid_data, num_epoch, n_models)
 
-    # test_accuracy = evaluate(ensemble_models, zero_train_matrix, test_data)
 
     test_accuracy = evaluate_ensemble(ensemble_models, zero_train_matrix, test_data)
     valid_accuracy = evaluate_ensemble(ensemble_models, zero_train_matrix, valid_data)
