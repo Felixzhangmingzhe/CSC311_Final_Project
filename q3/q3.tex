@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{fullpage,amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{calc}  % arithmetic in length parameters
+\usepackage{caption}
+\usepackage{enumitem}  % more control over list formatting
+\usepackage{fancyhdr}  % simpler headers and footers
+\usepackage{geometry}  % page layout
+\usepackage{lastpage}  % for last page number
+\usepackage{listings}
+\usepackage{relsize}  % easier font size changes
+\usepackage[normalem]{ulem}  % smarter underlining
+\usepackage{url}  % verb-like typesetting of URLs
+\usepackage{xcolor}
+\usepackage{xfrac}  % nicer looking simple fractions for text and math
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=false,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\everymath{\displaystyle}
+
+\newcommand{\arrayex}[1]{
+    \begin{tabular}{|*{20}{c|}}
+    \hline
+    #1 \\
+    \hline
+    \end{tabular}
+}
+
+\setlength{\tabcolsep}{5pt}
+
+\renewcommand{\arraystretch}{1}
+
+%\usepackage[T1]{fontenc}  % use true 8-bit fonts
+%\usepackage{slantsc}  % allow slanted small-caps
+%\usepackage{microtype}  % perform various font optimizations
+%% Use Palatino-based monospace instead of kpfonts' default.
+%\usepackage{newpxtext}
+
+% Common macros.
+\input{macros-263}
+
+
+\geometry{a4paper, margin=1in, headheight=15pt, headsep=20pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CSC311 Summer 2024}
+\fancyhead[R]{Final Project}
+\fancyfoot[C]{\thepage}
+
+
+\title{Question 3}
+\date{\vspace{-10.0ex}}
+\hypersetup{pdfpagemode=Fullscreen,
+    colorlinks=true,
+    linkfileprefix={}}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+    \textbf{We choose Option2}\\
+    \textbf{a)} \\
+    1.ALS break down large matrix into lower-dimensional matrices, Neural network modeling non-linear relationship trough layers. \\
+    2.ALS is less flexible than Neural network since they are designed for matrix factorization where neural network can model non-linear relationship.\\
+    3.ALS is more computationally efficient than Neural network for sparse dataset, Neural network require significant computational resource. \\
+    \textbf{b)}\\
+    coding in neural\_network.py \\
+    \textbf{c)}\\
+    the optimization hyperparameter we choose is: \\
+    k = 50, lr = 0.01, num\_epoch = 50 \\
+    We got Validation Accuracy of: 0.68981 \\
+    \textbf{d)}\\
+    plot with k = 50, lr = 0.01, num\_epoch = 50: \\
+    \includegraphics[width=0.7\linewidth]{6031723149317_.pic.jpg} \\
+    \includegraphics[width=0.7\linewidth]{6041723149328_.pic.jpg} \\
+    The Final Test Accuracy is: 0.68558 \\
+    \textbf{e)} \\
+    the best regularization penalty is lamb = 0.01, with this lamb, we got: \\
+    Final Validation Accuracy: 0.67824\\
+    Final Test Accuracy: 0.68078\\
+    The model didn't perform better with the regularization penalty, this may because that our model already well-regularized and does not overfitting or only has negligible overfitting issues. \\
+
+\end{enumerate}
+
+
+\end{document}
